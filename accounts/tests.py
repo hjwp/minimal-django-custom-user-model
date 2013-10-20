@@ -6,11 +6,17 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+from django.contrib.auth import login
+from django.http import HttpRequest
 
+from django.contrib.sessions.models import SessionStore
+from accounts.models import User
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+class MinimalUserModelTest(TestCase):
+
+    def test_login_a_user(self):
+        request = HttpRequest()
+        request.session = SessionStore()
+        user = User()
+        user.backend = '' # no idea what this is
+        login(request, user)
